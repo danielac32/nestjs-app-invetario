@@ -9,6 +9,7 @@ import {CategoriasModule} from '../categorias/categorias.module'
 @Module({
   controllers: [ProductoController],
   providers: [ProductoService,PrismaService],
-  imports:[AuthModule,CategoriasModule]
+  imports:[AuthModule,CategoriasModule],
+  exports:[ProductoService]
 })
 export class ProductoModule {}
