@@ -21,8 +21,13 @@ install:
 	npm install --force
 
 run:
-	npm run start:dev
-
+	sudo npm run start:dev
+migrate:
+	npx prisma migrate dev
+delete:
+	sudo chmod 777 -R prisma/
+	rm -R prisma/migrations
+	rm prisma/database.db
 pull:
 	git pull
 .PHONY: help commit install run pull
