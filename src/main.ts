@@ -4,9 +4,22 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder } from '@nestjs/swagger';
 import { SwaggerModule } from '@nestjs/swagger/dist';
+import * as cors from 'cors';
+
 
 async function bootstrap() {
+
+  const corsOptions = {
+    origin: ['http://localhost:4200'], // Orígenes permitidos
+    methods: ['GET', 'POST', 'PUT','DELETE','PATCH'], // Métodos permitidos
+    allowedHeaders: ['Content-Type', 'Authorization'], // Encabezados permitidos
+    preflightContinue: false,
+    optionsSuccessStatus: 200,
+  };
+
+
   const app = await NestFactory.create(AppModule);
+  app.use(cors(corsOptions));
   const logger = new Logger('Bootstrap')
   //app.setGlobalPrefix('api');
 

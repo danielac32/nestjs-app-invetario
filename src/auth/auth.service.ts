@@ -54,7 +54,7 @@ export class AuthService {
         }
     });
     if(!user)
-      throw new UnauthorizedException('Credentials are not valid (email)');
+      throw new NotFoundException(`${email} not found`);
 
     if( !bcrypt.compareSync(password, user.password) )
       throw new UnauthorizedException('Credentials are not valid (password)');
@@ -64,7 +64,10 @@ export class AuthService {
     const payload={ id: user.id, name:user.name };
 
     const token= await this.jwtService.sign(payload)
+
+    //return { status: HttpStatus.OK, data: [{user,token}] }
     return{
+       status: HttpStatus.OK,
        user,
        token
     }
@@ -90,7 +93,7 @@ export class AuthService {
         if (!user) {
             const userId = Number(id);
             if (!isNaN(userId)) {
-              user = await this.prisma.userEntity.findUnique({
+              user = await this.prisma.userEntity.findFirst({
                 where: {
                   id: userId
                 }
@@ -101,7 +104,7 @@ export class AuthService {
   }
 
   async findOne(id: string) {
-        const user= this.getUser(id);
+        const user= await this.getUser(id);
         if(!user)throw new NotFoundException(`Entity with ID ${id} not found`);
         return {
             user

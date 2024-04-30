@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete,UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete,UseGuards,Query } from '@nestjs/common';
 import { ProductoService } from './producto.service';
 import { CreateProductoDto } from './dto/create-producto.dto';
 import { UpdateProductoDto } from './dto/update-producto.dto';
@@ -18,11 +18,16 @@ export class ProductoController {
     return this.productoService.create(createProductoDto);
   }
   
+  @UseGuards(JwtAuthGuard)
+  @Post('stock')
+  updateStock(@Query('id') id: string, @Query('stock') stock: string) {
+    return this.productoService.updateStock(id,stock);
+  }
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  findAll() {
-    return this.productoService.findAll();
+  findAll(@Query('limit') limit: number, @Query('page') page: number) {
+    return this.productoService.findAll(limit, page);
   }
   
  

@@ -15,6 +15,34 @@ export class ProductoService {
     private authService: AuthService
     ) {}
 
+  async updateStock(id:string,stock:string){
+
+      console.log(id,stock)
+      const producto= await this.getProducto(Number(id));
+      if(!producto)throw new NotFoundException(`Entity with ID ${id} not found`);
+
+      let stockp=producto.stock;
+      let stockValue=Number(stock);
+      if(stockValue<0){//si es negativo
+        //error
+        throw new HttpException('El valor es negativo', 500);
+      }else{
+        stockp = stockp+stockValue;
+      }
+      const updatedProducto = await this.prisma.producto.update({
+          where: {
+            id: Number(id)
+          },
+          data:{
+            stock:stockp
+          }
+      });
+
+      return {
+            updatedProducto
+        }
+  }
+
   async create(createProductoDto: CreateProductoDto) {
     try{
         const producto = await this.prisma.producto.create({
@@ -30,12 +58,48 @@ export class ProductoService {
     }
   }
 
-  async findAll() {
-    const producto = await this.prisma.producto.findMany();
+  async findAll(limit: number=5, page: number=1) {
+    try{
+
+        const [total, producto] = await Promise.all([
+                                  this.prisma.producto.count(),
+                                  this.prisma.producto.findMany({
+                                      include: {
+                                          categoria:true,
+                                      },
+                                      skip: Number((page -1 )* limit),
+                                      take: Number(limit),
+                                  })
+      ]);
+
+      const lastPage = Math.ceil(total / limit);
+
+      return {
+          producto,
+          meta:{
+                total,
+                page,
+                lastPage
+          }
+      };
+    }catch (error) {
+          console.log(error)
+          throw new HttpException(error, 500);
+    }
+    /*const producto = await this.prisma.producto.findMany({
+       include:{
+              categoria:true,
+       }
+    });
 
     return{
-      producto
-    }
+      producto,
+      meta: {
+          total:0,
+          page:0,
+          lastPage:0
+      }
+    }*/
   }
   private async getProducto(id:number) {
     try{

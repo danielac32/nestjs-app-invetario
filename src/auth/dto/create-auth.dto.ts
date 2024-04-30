@@ -1,5 +1,5 @@
 
-import { IsEmail, IsString, Matches, MaxLength, MinLength,IsOptional } from 'class-validator';
+import { IsBoolean,IsEmail, IsString, Matches, MaxLength, MinLength,IsOptional } from 'class-validator';
 
 export class CreateAuthDto {
 
@@ -19,4 +19,8 @@ export class CreateAuthDto {
     @IsOptional()
     @IsString()
     rol: string;
+
+    @IsOptional()
+    @IsBoolean()
+    isActive: boolean;
 }
