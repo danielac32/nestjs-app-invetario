@@ -15,9 +15,9 @@ export class ProductoService {
     private authService: AuthService
     ) {}
 
-  async updateStock(id:string,stock:string){
+  async updateStockAdd(id:string,stock:string){
 
-      console.log(id,stock)
+      //console.log(id,stock)
       const producto= await this.getProducto(Number(id));
       if(!producto)throw new NotFoundException(`Entity with ID ${id} not found`);
 
@@ -42,6 +42,36 @@ export class ProductoService {
             updatedProducto
         }
   }
+
+
+async updateStockSub(id:string,stock:string){
+
+      //console.log(id,stock)
+      const producto= await this.getProducto(Number(id));
+      if(!producto)throw new NotFoundException(`Entity with ID ${id} not found`);
+
+      let stockp=producto.stock;
+      let stockValue=Number(stock);
+      if(stockValue<0){//si es negativo
+        //error
+        throw new HttpException('El valor es negativo', 500);
+      }else{
+        stockp = stockp-stockValue;
+      }
+      const updatedProducto = await this.prisma.producto.update({
+          where: {
+            id: Number(id)
+          },
+          data:{
+            stock:stockp
+          }
+      });
+
+      return {
+            updatedProducto
+        }
+  }
+
 
   async create(createProductoDto: CreateProductoDto) {
     try{

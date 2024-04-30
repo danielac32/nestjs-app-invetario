@@ -19,10 +19,17 @@ export class ProductoController {
   }
   
   @UseGuards(JwtAuthGuard)
-  @Post('stock')
-  updateStock(@Query('id') id: string, @Query('stock') stock: string) {
-    return this.productoService.updateStock(id,stock);
+  @Post('stockAdd')
+  updateStockAdd(@Query('id') id: string, @Query('stock') stock: string) {
+    return this.productoService.updateStockAdd(id,stock);
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('stockSub')
+  updateStockSub(@Query('id') id: string, @Query('stock') stock: string) {
+    return this.productoService.updateStockSub(id,stock);
+  }
+
 
   @UseGuards(JwtAuthGuard)
   @Get()
