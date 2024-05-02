@@ -13,7 +13,19 @@ export class CreateProductoDto {
     example: "User name",
     description: "Name of your user",
   })*/
+  
 
+  @IsOptional()
+  @IsString()
+  tipo: string;
+
+  @IsOptional()
+  valor: number;
+  
+  @IsOptional()
+  @IsString()
+  entregado: string;
+  
   @IsNotEmpty()
   @IsString()
   descripcion: string;
@@ -33,4 +45,45 @@ export class CreateProductoDto {
   @IsNotEmpty()
   @IsInt()
   categoriaId: number;
+}
+
+
+export class AddStockDto{
+
+  @IsInt()
+  stock: number;
+
+  @IsString()
+  tipo: string;
+
+  @IsInt()
+  valor: number;
+
+  @IsString()
+  entregado: string;
+}
+
+export class SubStockDto{
+
+  @IsInt()
+  stock: number;
+
+  @IsString()
+  tipo: string;
+  
+  @IsInt()
+  valor: number;
+
+  @IsString()
+  entregado: string;
+
+
+  @IsOptional()
+  @IsString()
+  observacion: string;
+  
+  @IsOptional()
+  @IsInt()
+  cedula: number;
+
 }

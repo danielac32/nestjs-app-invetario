@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete,UseGuards,Query } from '@nestjs/common';
 import { ProductoService } from './producto.service';
-import { CreateProductoDto } from './dto/create-producto.dto';
+import { CreateProductoDto ,AddStockDto ,SubStockDto} from './dto/create-producto.dto';
 import { UpdateProductoDto } from './dto/update-producto.dto';
 
 import { JwtAuthGuard } from '../../auth/jwt-auth.guard'
@@ -20,14 +20,14 @@ export class ProductoController {
   
   @UseGuards(JwtAuthGuard)
   @Post('stockAdd')
-  updateStockAdd(@Query('id') id: string, @Query('stock') stock: string) {
-    return this.productoService.updateStockAdd(id,stock);
+  updateStockAdd(@Query('id') id: string, @Body() addStockDto: AddStockDto) {
+    return this.productoService.updateStockAdd(id,addStockDto);
   }
 
   @UseGuards(JwtAuthGuard)
   @Post('stockSub')
-  updateStockSub(@Query('id') id: string, @Query('stock') stock: string) {
-    return this.productoService.updateStockSub(id,stock);
+  updateStockSub(@Query('id') id: string,@Body() subStockDto: SubStockDto ) {
+    return this.productoService.updateStockSub(id,subStockDto);
   }
 
 
