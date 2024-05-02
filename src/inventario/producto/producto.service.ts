@@ -15,6 +15,34 @@ export class ProductoService {
     private authService: AuthService
     ) {}
 
+
+
+
+
+  async getProducts(init:string, end:string){
+      try{
+           const producto = await this.prisma.producto.findMany({
+             where:{
+                 createdAt: 
+                        { 
+                            gte: new Date(init).toISOString(), 
+                            lte: new Date(end).toISOString() 
+                        } 
+             },
+             include:{
+                    categoria:true,
+                    user:true,
+                    modificaciones:true
+             }
+          });
+          return{
+              producto
+          }
+      }catch (error) {
+          console.log(error)
+          throw new HttpException(error, 500);
+      }
+  }
   async updateStockAdd(id:string,addStockDto: AddStockDto){
 
       //console.log(id,stock)

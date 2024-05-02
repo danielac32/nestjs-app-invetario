@@ -31,6 +31,14 @@ export class ProductoController {
   }
 
 
+
+
+  @UseGuards(JwtAuthGuard)
+  @Get('date')
+  getProducts(@Query('init') init: string, @Query('end') end: string) {
+    return this.productoService.getProducts(init, end);
+  }
+
   @UseGuards(JwtAuthGuard)
   @Get()
   findAll(@Query('limit') limit: number, @Query('page') page: number) {
