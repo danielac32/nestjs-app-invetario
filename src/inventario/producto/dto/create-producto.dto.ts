@@ -1,5 +1,5 @@
 
-import { IsNotEmpty, IsString, IsInt, IsDateString ,MaxLength, MinLength,IsOptional } from 'class-validator';
+import { IsPositive ,IsNotEmpty, IsString, IsInt, IsDateString ,MaxLength, MinLength,IsOptional } from 'class-validator';
  
  import { ApiProperty, ApiPropertyOptions } from '@nestjs/swagger';
 
@@ -56,6 +56,7 @@ export class AddStockDto{
   @IsString()
   tipo: string;
 
+  @IsPositive()
   @IsInt()
   valor: number;
 
@@ -71,6 +72,7 @@ export class SubStockDto{
   @IsString()
   tipo: string;
   
+  @IsPositive()
   @IsInt()
   valor: number;
 
