@@ -1,9 +1,8 @@
 # Usa una imagen base que contenga Node.js
-FROM node:latest
+FROM node:18
 
 # Instala SQLite y herramientas necesarias para compilar aplicaciones de Node.js
-RUN apt-get update && apt-get install -y sqlite3 libsqlite3-dev build-essential
-
+ 
 # Establece el directorio de trabajo en /app
 WORKDIR /app
 
@@ -20,7 +19,7 @@ RUN npm install -g @nestjs/cli
 COPY . .
 
 # Compila la aplicación Angular
-RUN npm run dev
+CMD ["npm", "run","start:dev"]
 
 # Expone el puerto 3000 para el servidor Nest.js
 EXPOSE 3000

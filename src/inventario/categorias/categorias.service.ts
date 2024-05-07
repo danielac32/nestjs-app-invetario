@@ -22,6 +22,7 @@ export class CategoriasService {
             categorias
         }
     } catch (error) {
+            console.log(error)
             throw new HttpException('Error creating categoria', 500);
     }
   }

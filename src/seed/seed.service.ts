@@ -18,23 +18,19 @@ export class SeedService {
   async createCategoria(){
     const categoriaToCreate = [
         {
-          id:1,
           name: 'papeleria'
         },
         {
-          id:2,
           name: 'memorias'
         },
         {
-          id:3,
           name: 'electricos'
         },
         {
-          id:4,
           name: 'herramienta'
         },
         {
-          id:5,
+
           name: 'cables'
         },
     ];
@@ -55,14 +51,14 @@ export class SeedService {
   async createUsers(){
     const usersToCreate = [
         {
-          id:1,
+   
           name: 'daniel quintero',
           email: 'danielquinteroac32@gmail.com',
           password: bcrypt.hashSync('123456', 10),
           rol: ValidRoles.admin,
         },
         {
-          id:2,
+     
           name: 'veronica garcia',
           email: 'veronica@gmail.com',
           password: bcrypt.hashSync('123456', 10),
